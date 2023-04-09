@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import axios from 'axios'
+
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -13,6 +15,10 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/persons').then(response => setPersons(response.data))
+  }, [])
 
 
   const addNewPerson = (event) => {
@@ -64,7 +70,7 @@ const App = () => {
       <div>debug: {newName}</div>
       <Persons persons={filteredPersons}/>
     </div>
-  )
+  ) 
 }
 
 export default App
