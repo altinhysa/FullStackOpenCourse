@@ -20,15 +20,26 @@ const App = () => {
   const addNewPerson = (event) => {
     event.preventDefault()
 
-    if(isPerson){
-      alert(`${newName} is already added to phonebook`)
-      return;
-    }
-
     const noteObject = {
       name: newName,
       number: newNumber
         }
+    
+    if(isPerson){
+      if(window.confirm(`${newName} is already added to phonebook, replace the old number with the new one?`)){
+        console.log(findId(newName))
+        const id = findId(newName)
+        console.log('id', id)
+        personsService.update(id, noteObject).then(returnedPerson => {
+          setPersons(persons.map(p => p.id !== id ? p :returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+      }
+      
+      return;
+    }
+
 
     personsService.create(noteObject).then(returnedPerson => {
       setPersons(persons.concat(returnedPerson))
@@ -40,6 +51,18 @@ const App = () => {
   }
 
   const isPerson = persons.find(({ name }) => name === newName);
+
+  const findId = (namee) => {
+    return persons.reduce((prev, current) => {
+      console.log(current.name, ' - ', current.id)
+      if(current.name === namee){
+        console.log('found', current.id)
+
+        return current.id
+      }
+      return prev
+    },null)
+  } 
 
   const handleNoteChange = (event) => {
     console.log(event.target.value)
