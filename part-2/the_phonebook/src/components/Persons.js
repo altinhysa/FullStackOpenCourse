@@ -18,17 +18,20 @@ const Persons = (props) => {
 
     const remove = person => {
         
-        window.confirm(`Delete ${person.person.name} ${person.person.number}`)
-        const id = person.person.id
-        handleDeleted(id)
+        if(window.confirm(`Delete ${person.person.name} ${person.person.number}`)){
+            const id = person.person.id
+            handleDeleted(id)
 
-        axios.delete(`${baseUrl}/${id}`)
-            .then(response => {
-                console.log(response.data); // handle success response
-            })
-            .catch(error => {
-                console.error(error); // handle error response
-            });
+            axios.delete(`${baseUrl}/${id}`)
+                .then(response => {
+                    console.log(response.data); // handle success response
+                })
+                .catch(error => {
+                    console.error(error); // handle error response
+                });
+            
+
+        }
         
     }
 
