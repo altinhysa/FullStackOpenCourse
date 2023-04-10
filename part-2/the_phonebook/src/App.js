@@ -3,6 +3,9 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import personsService from './services/persons'
+import './index.css'
+import Notification from './components/Notification'
+import ErrorNotification from './components/ErrorNotification'
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -11,6 +14,9 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [message, setMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
+
 
   useEffect(() => {
     personsService.getAll().then(value => setPersons(value))
@@ -34,6 +40,9 @@ const App = () => {
           setPersons(persons.map(p => p.id !== id ? p :returnedPerson))
           setNewName('')
           setNewNumber('')
+        }).catch(error => {
+          setErrorMessage(`Information of ${noteObject.name} has been deleted`)
+          setPersons(persons.filter(p => p.id !== id))
         })
       }
       
@@ -45,6 +54,8 @@ const App = () => {
       setPersons(persons.concat(returnedPerson))
       setNewName('')
       setNewNumber('')
+      setMessage(`Added ${noteObject.name}`)
+      setTimeout(() => setMessage(null), 5000)
     })
 
     
@@ -88,6 +99,8 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Filter value={newFilter} change={handeFilterChange}/>
+      <Notification message={message} />
+      <ErrorNotification message={errorMessage} />
       <h2>Add a new</h2>
       <PersonForm submit={addNewPerson}  name={newName} nameChange={handleNoteChange} phone={newNumber} phoneChange={handlePhoneChange}/>
       
