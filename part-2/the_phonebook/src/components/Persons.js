@@ -39,7 +39,7 @@ const Persons = (props) => {
 
     return (
         <>
-        {myArray.map(person => <li key={person.id}>{person.name} {person.number} <button onClick={() => remove({person})}>delete</button></li>)}
+        {myArray.map(person => <li key={person.id}>{person.name} {person.phone} <button onClick={() => remove({person})}>delete</button></li>)}
         
         </>
     )

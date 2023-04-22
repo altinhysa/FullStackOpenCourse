@@ -28,7 +28,7 @@ const App = () => {
 
     const noteObject = {
       name: newName,
-      number: newNumber
+      phone: newNumber
         }
     
     if(isPerson){
