@@ -18,7 +18,7 @@ const Persons = (props) => {
 
     const remove = person => {
         
-        if(window.confirm(`Delete ${person.person.name} ${person.person.number}`)){
+        if(window.confirm(`Delete ${person.person.name} ${person.person.phone}`)){
             const id = person.person.id
             handleDeleted(id)
 
