@@ -42,7 +42,7 @@ const App = () => {
           setNewNumber('')
         }).catch(error => {
           setErrorMessage(error.response.data.error)
-          setPersons(persons.filter(p => p.id !== id))
+         // setPersons(persons.filter(p => p.id !== id))
         })
       }
       
@@ -58,7 +58,7 @@ const App = () => {
       setTimeout(() => setMessage(null), 5000)
     }).catch(error => {
       // this is the way to access the error message
-      console.log(error.response.data.error)
+      setErrorMessage(error.response.data.error)
     })
 
     
